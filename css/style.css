@@ -1,0 +1,195 @@
+.headerbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  border-bottom: dashed gray;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 12px;
+  border-top: dashed gray;
+}
+
+.logo {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  padding: 10px;
+  margin: auto 10px;
+  letter-spacing: 3px;
+  font-family: Chalkboard;
+}
+
+.navi {
+  font-size: 14px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+main {
+  background-color: antiquewhite;
+  padding: 20px;
+}
+
+section {
+  background-color: white;
+  margin: 10px;
+  padding: 20px;
+}
+
+#memory {
+  border: solid;
+}
+
+.memorybox {
+  display: flex;
+  justify-content: flex-start;
+  height: auto;
+}
+
+.key,
+.memo {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border: gray dotted;
+  margin: 0 30px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.key {
+  border: double gray;
+}
+
+.memo {
+  border: gray dotted;
+}
+
+.key::placeholder,
+.memo::placeholder {
+  text-align: center;
+}
+
+button {
+  border: solid lightsalmon;
+  color: white;
+  background-color: lightsalmon;
+  padding: 10px;
+  width: 100px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.savebox {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save {
+  margin: 0 10px;
+}
+
+.reset {
+  margin: 0 10px;
+  border: lightsalmon dotted;
+  background-color: white;
+  color: lightsalmon;
+}
+
+h2 {
+  font-size: 20px;
+  padding: 10px;
+}
+
+h2::first-letter {
+  font-size: 30px;
+  color: orange;
+}
+
+#list {
+  border: solid orange;
+  padding: 10px;
+  display: block;
+}
+
+td {
+  background-color: white;
+  padding: 15px;
+  text-align: start;
+  border-bottom: orange double;
+  padding: auto 20px;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .logo h1 {
+    font-size: 20px;
+    text-align: start;
+  }
+
+  .navi {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  main {
+    padding: 10px;
+  }
+
+  section {
+    margin: 5px 0;
+    padding: 10px;
+  }
+
+  #memory {
+    border: none;
+  }
+
+  .memorybox {
+    flex-direction: column;
+  }
+
+  .key,
+  .memo {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .savebox {
+    display: flex;
+    justify-content: center;
+  }
+
+  .save,
+  .reset {
+    width: 40%;
+    margin: 5px 10px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  #list {
+    padding: 5px;
+  }
+
+  #list td {
+    max-width: 200px;
+    word-wrap: break-word;
+    font-size: 14px;
+    padding: 10px;
+  }
+}

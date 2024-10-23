@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="Restaurant Memory Lists"
+      content="Restaurant Memory Lists は、自分が気に入った飲食店をローカルストレージに登録し記録することができるサービスです。"
+    />
+    <title>Restaurant Memory Lists</title>
+    <link rel="stylesheet" href="css/destyle.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="img/favicon.png" id="favicon" />
+    <!-- cdn jquery googleで検索したjquery。link切れた時にまずいサービスはlinkは使わない。 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="headerbox">
+        <div class="logo">
+          <h1>Restaurant Memory Lists</h1>
+        </div>
+        <div class="navi">
+          <button id="openmodal"><a href="#memory">登録はこちらから</a></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="memory">
+        <h2>登録はこちらから</h2>
+        <div class="memorybox">
+          <input type="text" id="key" class="key" placeholder="店名を入力" />
+          <textarea
+            id="memo"
+            class="memo"
+            cols="100"
+            rows="1"
+            placeholder="お店の情報（HPなど）を入力"
+          ></textarea>
+        </div>
+        <div class="savebox">
+          <button id="save" class="save">セーブ</button>
+          <button id="reset" class="reset">リセット</button>
+        </div>
+      </section>
+
+      <section id="category">
+        <h2>おすすめのお店はこちら</h2>
+        <table id="list">
+          <tr>
+            <td>＜店名＞</td>
+            <td><a href="">＜お店の情報＞</a></td>
+          </tr>
+        </table>
+      </section>
+    </main>
+
+    <footer>
+      <p>©️ G's ACADEMY</p>
+    </footer>
+
+    <script>
+      $(document).ready(function () {
+        for (let i = 0; i < localStorage.length; i++) {
+          const tenmei = localStorage.key(i);
+          const tenpo = localStorage.getItem(tenmei);
+          const omise =
+            "<tr><td>" +
+            tenmei +
+            "</td><td><a href='" +
+            tenpo +
+            "' target='_blank'>" +
+            tenpo +
+            "</a></td></tr>";
+          $("#list").append(omise);
+        }
+      });
+
+      $("#save").on("click", function () {
+        const tenmei = $("#key").val();
+        const tenpo = $("#memo").val();
+        localStorage.setItem(tenmei, tenpo);
+
+        const omise = "<tr><td>" + tenmei + "</td><td>" + tenpo + "</td></tr>";
+        $("#list").append(omise);
+        $("#tenmei").val("");
+        $("tenpo").val("");
+      });
+      $("#reset").on("click", function () {
+        localStorage.clear();
+        $("#list").empty();
+      });
+      $("save").on("loading", function () {
+        localStorage.getItem(tenmei, tenpo);
+      });
+    </script>
+  </body>
+</html>

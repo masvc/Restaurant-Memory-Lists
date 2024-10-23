@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="Restaurant Memory Lists"
+      content="Restaurant Memory Lists は、自分が気に入った飲食店をローカルストレージに登録し記録することができるサービスです。"
+    />
+    <title>Restaurant Memory Lists</title>
+    <link rel="stylesheet" href="css/destyle.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="img/favicon.png" id="favicon" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="headerbox">
+        <div class="logo">
+          <h1>Restaurant Memory Lists</h1>
+        </div>
+        <div class="navi">
+          <button id="openmodal">登録はこちらから</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="category">
+        <h2>おすすめのお店はこちら</h2>
+        <table id="list">
+          <tr>
+            <td>＜店名＞</td>
+            <td><a href="">＜お店の情報＞</a></td>
+          </tr>
+        </table>
+      </section>
+    </main>
+
+    <!-- モーダル -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <section id="memory">
+          <h2>登録はこちらから</h2>
+          <div class="memorybox">
+            <input type="text" id="key" class="key" placeholder="店名を入力" />
+            <textarea
+              id="memo"
+              class="memo"
+              cols="100"
+              rows="1"
+              placeholder="お店の情報（HPなど）を入力"
+            ></textarea>
+          </div>
+          <div class="savebox">
+            <button id="save" class="save">セーブ</button>
+            <button id="reset" class="reset">リセット</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer>
+      <p>©️ G's ACADEMY</p>
+    </footer>
+
+    <script>
+      $(document).ready(function () {
+        // ローカルストレージからデータを取得して表示
+        for (let i = 0; i < localStorage.length; i++) {
+          const tenmei = localStorage.key(i);
+          const tenpo = localStorage.getItem(tenmei);
+          // URLであればリンクとして表示
+          const omise =
+            "<tr><td class='store-name'>" +
+            tenmei +
+            "</td><td class='store-info'><a href='" +
+            tenpo +
+            "' target='_blank' class='link'>" +
+            (isValidURL(tenpo) ? tenpo : "情報を表示") +
+            "</a></td></tr>";
+          $("#list").append(omise);
+        }
+
+        // モーダルを開く
+        $("#openmodal").on("click", function () {
+          $("#modal").show();
+        });
+
+        // モーダルを閉じる
+        $(".close").on("click", function () {
+          $("#modal").hide();
+        });
+
+        $(window).on("click", function (event) {
+          if ($(event.target).is("#modal")) {
+            $("#modal").hide();
+          }
+        });
+
+        // 保存ボタンがクリックされた時の処理
+        $("#save").on("click", function () {
+          const tenmei = $("#key").val();
+          const tenpo = $("#memo").val();
+          localStorage.setItem(tenmei, tenpo);
+
+          // URLであればリンクとして表示
+          const omise =
+            "<tr><td class='store-name'>" +
+            tenmei +
+            "</td><td class='store-info'><a href='" +
+            tenpo +
+            "' target='_blank' class='link'>" +
+            (isValidURL(tenpo) ? tenpo : "情報を表示") +
+            "</a></td></tr>";
+          $("#list").append(omise);
+          $("#key").val("");
+          $("#memo").val("");
+        });
+
+        // リセットボタンがクリックされた時の処理
+        $("#reset").on("click", function () {
+          localStorage.clear();
+          $("#list").empty();
+        });
+      });
+
+      // URLの形式をチェックする関数
+      function isValidURL(string) {
+        const res = string.match(/^(ftp|http|https):\/\/[^ "]+$/);
+        return res !== null;
+      }
+    </script>
+
+    <style>
+      .modal {
+        display: none; /* 初期状態では非表示 */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7); /* 半透明の黒背景 */
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px; /* 最大幅を広げる */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* シャドウを追加 */
+      }
+
+      .close {
+        color: #d9534f; /* ボタンの色を変更 */
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        transition: color 0.3s; /* ホバー時の色変更をスムーズに */
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .link {
+        color: #007bff; /* リンクの色 */
+        text-decoration: underline; /* 下線を追加 */
+        transition: color 0.3s; /* ホバー時の色変更をスムーズに */
+      }
+
+      .link:hover {
+        color: #0056b3; /* ホバー時の色 */
+      }
+
+      /* テーブルスタイルの追加 */
+      #list {
+        width: 100%;
+        border-collapse: collapse; /* セルの境界を重ねる */
+      }
+
+      #list td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        word-wrap: break-word; /* 長い単語を折り返す */
+
+        overflow: hidden; /* オーバーフローを隠す */
+        text-overflow: ellipsis; /* テキストの省略表示 */
+      }
+
+      /* モーダル内のテキストのスタイル */
+      .memorybox input,
+      .memorybox textarea {
+        font-size: 14px; /* フォントサイズを小さく */
+      }
+
+      @media (max-width: 768px) {
+        .modal-content {
+          margin: 10% auto; /* スマホでのマージンを調整 */
+          width: 90%; /* 幅を90%に */
+        }
+
+        .close {
+          font-size: 24px; /* スマホでのフォントサイズを調整 */
+        }
+        #list td {
+          max-width: 200px;
+        }
+      }
+    </style>
+  </body>
+</html>
